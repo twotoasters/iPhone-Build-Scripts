@@ -9,8 +9,6 @@ platform_name = ENV['PLATFORM_NAME']
 configuration = ENV['CONFIGURATION']
 config_build_dir = ENV['CONFIGURATION_BUILD_DIR']
 project_name = ENV['PROJECT']
-date_string = Time.now.strftime('%m_%d_%Y')
-# file_basename = "#{project_name}-#{date_string}"
 
 version = `agvtool vers -terse`
 
@@ -28,11 +26,10 @@ end
 
 # We are all good, proceed with generating the build
 puts "Compressing builds and provisioning profile..."
-# existing_builds = Dir.entries(build_dir).select { |e| e =~ /^#{file_basename}/ }.sort
-# last_build_number = existing_builds.empty? ? 0 : existing_builds.last.split('-').last.gsub('.zip', '').to_i
-# last_build_number += 1
-# filename = "#{file_basename}-#{last_build_number}.zip"
-filename = "#{project_name} build \##{version}"
+filename = "#{project_name}-#{version}.zip"
+command = "cp Resources/*.mobileprovision #{build_dir}"
+puts "Executing zip command: #{command}"
+puts `#{command}`
 command = "cd \"#{build_dir}\" && zip -r \"#{filename}\" *.app *.mobileprovision *.dSYM"
 puts "Executing zip command: #{command}"
 puts `#{command}`
