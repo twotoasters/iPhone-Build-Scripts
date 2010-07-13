@@ -10,7 +10,7 @@ configuration = ENV['CONFIGURATION']
 config_build_dir = ENV['CONFIGURATION_BUILD_DIR']
 project_name = ENV['PROJECT']
 
-version = `agvtool vers -terse`
+version = `agvtool vers -terse`.chomp
 
 # Very that we are on the right platform
 if platform_name != 'iphoneos'
